@@ -1,6 +1,4 @@
-/*
- * Copyright 2021 Quentin LEBASTARD <qlebastard@gmail.com>
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
+/* Copyright 2020 Christopher Courtney, aka Drashna Jael're  (@drashna) <drashna@live.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +16,16 @@
 
 #pragma once
 
-#define DIODE_DIRECTION ROW2COL
+#include QMK_KEYBOARD_H
+#include "version.h"
+#include "eeprom.h"
 
-/* Trackball angle adjustment. */
-#define ROTATIONAL_TRANSFORM_ANGLE -25
-#define CHARYBDIS_DRAGSCROLL_REVERSE_X
+// Define layer names
+#define BASE 0
 
-
-/* RGB settings. */
-#ifdef RGB_MATRIX_ENABLE
-#    define RGB_MATRIX_LED_COUNT 36
-#    define RGB_MATRIX_SPLIT \
-        { 18, 18 }
-#endif
+enum custom_keycodes {
+    VRSN = SAFE_RANGE,  // can always be here
+    KC_MAKE,
+    KC_RESET,
+    NEWPLACEHOLDER  // use "NEWPLACEHOLDER for keymap specific codes
+};

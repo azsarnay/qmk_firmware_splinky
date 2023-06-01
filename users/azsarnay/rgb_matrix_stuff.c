@@ -1,6 +1,4 @@
-/*
- * Copyright 2021 Quentin LEBASTARD <qlebastard@gmail.com>
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
+/* Copyright 2020 Christopher Courtney, aka Drashna Jael're  (@drashna) <drashna@live.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +14,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#define DIODE_DIRECTION ROW2COL
-
-/* Trackball angle adjustment. */
-#define ROTATIONAL_TRANSFORM_ANGLE -25
-#define CHARYBDIS_DRAGSCROLL_REVERSE_X
+#include "azsarnay.h"
+#include "rgb_matrix.h"
+#include "lib/lib8tion/lib8tion.h"
+extern led_config_t g_led_config;
 
 
-/* RGB settings. */
-#ifdef RGB_MATRIX_ENABLE
-#    define RGB_MATRIX_LED_COUNT 36
-#    define RGB_MATRIX_SPLIT \
-        { 18, 18 }
+__attribute__((weak)) void rgb_matrix_indicator_keymap(void) {}
+
+
+void keyboard_post_init_rgb_matrix(void) {
+#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS)
+    if (userspace_config.rgb_matrix_idle_anim) {
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_REST_MODE);
+    }
 #endif
+}

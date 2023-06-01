@@ -1,6 +1,4 @@
-/*
- * Copyright 2021 Quentin LEBASTARD <qlebastard@gmail.com>
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
+/* Copyright 2020 Christopher Courtney, aka Drashna Jael're  (@drashna) <drashna@live.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +15,8 @@
  */
 
 #pragma once
+#include "quantum.h"
 
-#define DIODE_DIRECTION ROW2COL
+void keyboard_post_init_rgb_matrix(void);
 
-/* Trackball angle adjustment. */
-#define ROTATIONAL_TRANSFORM_ANGLE -25
-#define CHARYBDIS_DRAGSCROLL_REVERSE_X
-
-
-/* RGB settings. */
-#ifdef RGB_MATRIX_ENABLE
-#    define RGB_MATRIX_LED_COUNT 36
-#    define RGB_MATRIX_SPLIT \
-        { 18, 18 }
-#endif
+void rgb_matrix_set_color_all(uint8_t red, uint8_t green, uint8_t blue);

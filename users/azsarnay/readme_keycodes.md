@@ -1,7 +1,7 @@
 
 # Custom Keycodes
 
-Keycodes are defined in the drashna.h file and need to be included in the keymap.c files, so that they can be used there. 
+Keycodes are defined in the azsarnay.h file and need to be included in the keymap.c files, so that they can be used there. 
 
 A bunch of macros are present and are only included on boards that are not the Ergodox EZ or Orthodox, as they are not needed for those boards. 
 

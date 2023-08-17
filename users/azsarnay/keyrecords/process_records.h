@@ -6,9 +6,6 @@
 
 enum userspace_custom_keycodes {
     VRSN = QK_USER,  // Prints QMK Firmware and board info
-    KC_DIABLO_CLEAR, // Clears all Diablo Timers
-    KC_RGB_T,        // Toggles RGB Layer Indication mode
-    RGB_IDL,         // RGB Idling animations
     KC_SECRET_1,                    // test1
     KC_SECRET_2,                    // test2
     KC_SECRET_3,                    // test3
@@ -163,13 +160,13 @@ bool process_record_unicode(uint16_t keycode, keyrecord_t *record);
 #define KC_RST   KC_RESET
 
 
-#ifdef SWAP_HANDS_ENABLE
-#    define KC_C1R3 SH_T(KC_TAB)
-#elif defined(DRASHNA_LP)
-#    define KC_C1R3 TG(_GAMEPAD)
-#else // SWAP_HANDS_ENABLE
-#    define KC_C1R3 KC_TAB
-#endif // SWAP_HANDS_ENABLE
+// #ifdef SWAP_HANDS_ENABLE
+// #    define KC_C1R3 SH_T(KC_TAB)
+// #elif defined(DRASHNA_LP)
+// #    define KC_C1R3 TG(_GAMEPAD)
+// #else // SWAP_HANDS_ENABLE
+// #    define KC_C1R3 KC_TAB
+// #endif // SWAP_HANDS_ENABLE
 
 
 /* OSM keycodes, to keep things clean and easy to change */

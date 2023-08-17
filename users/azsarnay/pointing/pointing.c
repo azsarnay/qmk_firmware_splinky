@@ -16,14 +16,14 @@ bool            enable_acceleration  = false;
 #    define TAP_CHECK TAPPING_TERM
 #endif
 
-__attribute__((weak)) void pointing_device_init_keymap(void) {}
+// __attribute__((weak)) void pointing_device_init_keymap(void) {}
 
-void pointing_device_init_user(void) {
-    set_auto_mouse_layer(_MOUSE);
-    set_auto_mouse_enable(true);
+// void pointing_device_init_user(void) {
+//     set_auto_mouse_layer(_MOUSE);
+//     set_auto_mouse_enable(true);
 
-    pointing_device_init_keymap();
-}
+//     pointing_device_init_keymap();
+// }
 
 __attribute__((weak)) report_mouse_t pointing_device_task_keymap(report_mouse_t mouse_report) {
     return mouse_report;
@@ -68,15 +68,15 @@ bool process_record_pointing(uint16_t keycode, keyrecord_t* record) {
     return true;
 }
 
-layer_state_t layer_state_set_pointing(layer_state_t state) {
-    if (layer_state_cmp(state, _GAMEPAD) || layer_state_cmp(state, _DIABLO) || layer_state_cmp(state, _DIABLOII)) {
-        state |= ((layer_state_t)1 << _MOUSE);
-        set_auto_mouse_enable(false); // auto mouse can be disabled any time during run time
-    } else {
-        set_auto_mouse_enable(true);
-    }
-    return state;
-}
+// layer_state_t layer_state_set_pointing(layer_state_t state) {
+//     if (layer_state_cmp(state, _GAMEPAD) || layer_state_cmp(state, _DIABLO) || layer_state_cmp(state, _DIABLOII)) {
+//         state |= ((layer_state_t)1 << _MOUSE);
+//         set_auto_mouse_enable(false); // auto mouse can be disabled any time during run time
+//     } else {
+//         set_auto_mouse_enable(true);
+//     }
+//     return state;
+// }
 
 #if defined(POINTING_DEVICE_MOUSE_JIGGLER_ENABLE)
 static uint16_t mouse_jiggler_timer;

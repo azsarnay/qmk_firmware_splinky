@@ -17,22 +17,14 @@
 #pragma once
 #include QMK_KEYBOARD_H
 
-#include "eeconfig_users.h"
 #include "keyrecords/wrappers.h"
 #include "keyrecords/process_records.h"
 #include "callbacks.h"
+#include "eeconfig_users.h"
 
-#ifdef TAP_DANCE_ENABLE
-#    include "keyrecords/tap_dances.h"
-#endif // TAP_DANCE_ENABLE
-#if defined(RGBLIGHT_ENABLE)
-#    include "rgb/rgb_stuff.h"
-#endif
+
 #if defined(RGB_MATRIX_ENABLE)
 #    include "rgb/rgb_matrix_stuff.h"
-#endif
-#if defined(OLED_ENABLE)
-#    include "oled/oled_stuff.h"
 #endif
 #ifdef SPLIT_KEYBOARD
 #    include "split/transport_sync.h"
@@ -65,15 +57,15 @@ enum userspace_layers {
     _QWERTY,
 };
 
-#define _MOUSE _MACROS
+// #define _MOUSE _MACROS
 
 bool          mod_key_press_timer(uint16_t code, uint16_t mod_code, bool pressed);
 bool          mod_key_press(uint16_t code, uint16_t mod_code, bool pressed, uint16_t this_timer);
-void          matrix_init_keymap(void);
-void          matrix_init_secret(void);
-void          shutdown_keymap(void);
-void          suspend_power_down_keymap(void);
-void          suspend_wakeup_init_keymap(void);
+// void          matrix_init_keymap(void);
+// void          matrix_init_secret(void);
+// void          shutdown_keymap(void);
+// void          suspend_power_down_keymap(void);
+// void          suspend_wakeup_init_keymap(void);
 void          matrix_scan_keymap(void);
 void          matrix_scan_secret(void);
 layer_state_t layer_state_set_keymap(layer_state_t state);

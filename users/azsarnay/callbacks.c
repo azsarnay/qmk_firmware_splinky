@@ -91,23 +91,6 @@ void                       shutdown_user(void) {
     shutdown_keymap();
 }
 
-__attribute__((weak)) void suspend_power_down_keymap(void) {}
-
-void suspend_power_down_user(void) {
-    if (layer_state_is(_GAMEPAD)) {
-        layer_off(_GAMEPAD);
-    }
-    if (layer_state_is(_DIABLO)) {
-        layer_off(_DIABLO);
-    }
-    if (layer_state_is(_DIABLOII)) {
-        layer_off(_DIABLOII);
-    }
-#ifdef OLED_ENABLE
-    oled_off();
-#endif
-    suspend_power_down_keymap();
-}
 
 __attribute__((weak)) void suspend_wakeup_init_keymap(void) {}
 void                       suspend_wakeup_init_user(void) {
@@ -131,32 +114,31 @@ __attribute__((weak)) layer_state_t layer_state_set_keymap(layer_state_t state) 
     return state;
 }
 layer_state_t layer_state_set_user(layer_state_t state) {
-    state = update_tri_layer_state(state, _RAISE, _LOWER, _ADJUST);
-#if defined(CUSTOM_POINTING_DEVICE)
-    state = layer_state_set_pointing(state);
-#endif
-#if defined(CUSTOM_RGBLIGHT)
-    state = layer_state_set_rgb_light(state);
-#endif // CUSTOM_RGBLIGHT
-#if defined(AUDIO_ENABLE)
-    static bool is_gamepad_on = false;
-    if (layer_state_cmp(state, _GAMEPAD) != is_gamepad_on) {
-        static bool is_click_on = false;
-        is_gamepad_on           = layer_state_cmp(state, _GAMEPAD);
-        if (is_gamepad_on) {
-            is_click_on = is_clicky_on();
-            if (is_click_on) {
-                clicky_off();
-            }
-            PLAY_LOOP(doom_song);
-        } else {
-            if (is_click_on) {
-                clicky_on();
-            }
-            stop_all_notes();
-        }
-    }
-#endif
+// #if defined(CUSTOM_POINTING_DEVICE)
+//     state = layer_state_set_pointing(state);
+// #endif
+// #if defined(CUSTOM_RGBLIGHT)
+//     state = layer_state_set_rgb_light(state);
+// #endif // CUSTOM_RGBLIGHT
+// #if defined(AUDIO_ENABLE)
+//     static bool is_gamepad_on = false;
+//     if (layer_state_cmp(state, _GAMEPAD) != is_gamepad_on) {
+//         static bool is_click_on = false;
+//         is_gamepad_on           = layer_state_cmp(state, _GAMEPAD);
+//         if (is_gamepad_on) {
+//             is_click_on = is_clicky_on();
+//             if (is_click_on) {
+//                 clicky_off();
+//             }
+//             PLAY_LOOP(doom_song);
+//         } else {
+//             if (is_click_on) {
+//                 clicky_on();
+//             }
+//             stop_all_notes();
+//         }
+//     }
+// #endif
     state = layer_state_set_keymap(state);
 
 #ifdef CONSOLE_ENABLE
@@ -273,9 +255,9 @@ void                       housekeeping_task_user(void) {
         has_ran_yet = true;
         startup_user();
     }
-#ifdef TAP_DANCE_ENABLE // Run Diablo 3 macro checking code.
-    run_diablo_macro_check();
-#endif // TAP_DANCE_ENABLE
+// #ifdef TAP_DANCE_ENABLE // Run Diablo 3 macro checking code.
+//     run_diablo_macro_check();
+// #endif // TAP_DANCE_ENABLE
 #if defined(CUSTOM_RGB_MATRIX)
     housekeeping_task_rgb_matrix();
 #endif

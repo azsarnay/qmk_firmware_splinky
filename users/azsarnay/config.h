@@ -189,10 +189,11 @@
 #   define DISABLE_RGB_MATRIX_SPLASH							// Full gradient & value pulse away from a single key hit then fades value out
 #   define DISABLE_RGB_MATRIX_MULTISPLASH						// Full gradient & value pulse away from multiple key hits then fades value out
 #   define DISABLE_RGB_MATRIX_SOLID_SPLASH						// Hue & value pulse away from a single key hit then fades value out
-#   define DISABLE_RGB_MATRIX_SOLID_MULTISPLASH					// Hue & value pulse away from multiple key hits then fades value out
+#   define DISABLE_RGB_MATRIX_SOLID_MULTISPLASH
 #   define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_RAINDROPS // Sets the default mode, if none has been set
 #   define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_RAINDROPS
 #   define RGB_MATRIX_STARTUP_HUE 96 // Sets the default hue value, if none has been set
+#    undef RGB_MATRIX_DEFAULT_HUE					// Hue & value pulse away from multiple key hits then fades value out
 #   define RGB_MATRIX_DEFAULT_HUE 96
 #   define RGB_MATRIX_STARTUP_SAT 255 // Sets the default saturation value, if none has been set
 #   define RGB_MATRIX_DEFAULT_SAT 255

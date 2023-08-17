@@ -258,71 +258,71 @@ DEFINE_UNICODE_LUT_TRANSLATOR(unicode_lut_translator_comic,
                               '0'  // 0
 );
 
-bool process_record_aussie(uint16_t keycode, keyrecord_t *record) {
-    bool is_shifted = (get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT;
-    if ((KC_A <= keycode) && (keycode <= KC_0)) {
-        if (record->event.pressed) {
-            if (!process_record_glyph_replacement(keycode, record, unicode_lut_translator_aussie)) {
-                tap_code16_nomods(KC_LEFT);
-                return false;
-            }
-        }
-    } else if (record->event.pressed && keycode == KC_SPACE) {
-        tap_code16_nomods(KC_SPACE);
-        tap_code16_nomods(KC_LEFT);
-        return false;
-    } else if (record->event.pressed && keycode == KC_ENTER) {
-        tap_code16_nomods(KC_END);
-        tap_code16_nomods(KC_ENTER);
-        return false;
-    } else if (record->event.pressed && keycode == KC_HOME) {
-        tap_code16_nomods(KC_END);
-        return false;
-    } else if (record->event.pressed && keycode == KC_END) {
-        tap_code16_nomods(KC_HOME);
-        return false;
-    } else if (record->event.pressed && keycode == KC_BSPC) {
-        tap_code16_nomods(KC_DEL);
-        return false;
-    } else if (record->event.pressed && keycode == KC_DEL) {
-        tap_code16_nomods(KC_BSPC);
-        return false;
-    } else if (record->event.pressed && keycode == KC_QUOT) {
-        tap_unicode_glyph_nomods(is_shifted ? 0x201E : 0x201A);
-        tap_code16_nomods(KC_LEFT);
-        return false;
-    } else if (record->event.pressed && keycode == KC_COMMA) {
-        tap_unicode_glyph_nomods(is_shifted ? '<' : 0x2018);
-        tap_code16_nomods(KC_LEFT);
-        return false;
-    } else if (record->event.pressed && keycode == KC_DOT) {
-        tap_unicode_glyph_nomods(is_shifted ? '>' : 0x02D9);
-        tap_code16_nomods(KC_LEFT);
-        return false;
-    } else if (record->event.pressed && keycode == KC_SLASH) {
-        tap_unicode_glyph_nomods(is_shifted ? 0x00BF : '/');
-        tap_code16_nomods(KC_LEFT);
-        return false;
-    }
-    return true;
-}
+// bool process_record_aussie(uint16_t keycode, keyrecord_t *record) {
+//     bool is_shifted = (get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT;
+//     if ((KC_A <= keycode) && (keycode <= KC_0)) {
+//         if (record->event.pressed) {
+//             if (!process_record_glyph_replacement(keycode, record, unicode_lut_translator_aussie)) {
+//                 tap_code16_nomods(KC_LEFT);
+//                 return false;
+//             }
+//         }
+//     } else if (record->event.pressed && keycode == KC_SPACE) {
+//         tap_code16_nomods(KC_SPACE);
+//         tap_code16_nomods(KC_LEFT);
+//         return false;
+//     } else if (record->event.pressed && keycode == KC_ENTER) {
+//         tap_code16_nomods(KC_END);
+//         tap_code16_nomods(KC_ENTER);
+//         return false;
+//     } else if (record->event.pressed && keycode == KC_HOME) {
+//         tap_code16_nomods(KC_END);
+//         return false;
+//     } else if (record->event.pressed && keycode == KC_END) {
+//         tap_code16_nomods(KC_HOME);
+//         return false;
+//     } else if (record->event.pressed && keycode == KC_BSPC) {
+//         tap_code16_nomods(KC_DEL);
+//         return false;
+//     } else if (record->event.pressed && keycode == KC_DEL) {
+//         tap_code16_nomods(KC_BSPC);
+//         return false;
+//     } else if (record->event.pressed && keycode == KC_QUOT) {
+//         tap_unicode_glyph_nomods(is_shifted ? 0x201E : 0x201A);
+//         tap_code16_nomods(KC_LEFT);
+//         return false;
+//     } else if (record->event.pressed && keycode == KC_COMMA) {
+//         tap_unicode_glyph_nomods(is_shifted ? '<' : 0x2018);
+//         tap_code16_nomods(KC_LEFT);
+//         return false;
+//     } else if (record->event.pressed && keycode == KC_DOT) {
+//         tap_unicode_glyph_nomods(is_shifted ? '>' : 0x02D9);
+//         tap_code16_nomods(KC_LEFT);
+//         return false;
+//     } else if (record->event.pressed && keycode == KC_SLASH) {
+//         tap_unicode_glyph_nomods(is_shifted ? 0x00BF : '/');
+//         tap_code16_nomods(KC_LEFT);
+//         return false;
+//     }
+//     return true;
+// }
 
-bool process_record_zalgo(uint16_t keycode, keyrecord_t *record) {
-    if ((KC_A <= keycode) && (keycode <= KC_0)) {
-        if (record->event.pressed) {
-            tap_code16_nomods(keycode);
+// bool process_record_zalgo(uint16_t keycode, keyrecord_t *record) {
+//     if ((KC_A <= keycode) && (keycode <= KC_0)) {
+//         if (record->event.pressed) {
+//             tap_code16_nomods(keycode);
 
-            int number = (rand() % (8 + 1 - 2)) + 2;
-            for (int index = 0; index < number; index++) {
-                uint16_t hex = (rand() % (0x036F + 1 - 0x0300)) + 0x0300;
-                register_unicode(hex);
-            }
+//             int number = (rand() % (8 + 1 - 2)) + 2;
+//             for (int index = 0; index < number; index++) {
+//                 uint16_t hex = (rand() % (0x036F + 1 - 0x0300)) + 0x0300;
+//                 register_unicode(hex);
+//             }
 
-            return false;
-        }
-    }
-    return true;
-}
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
 /**
  * @brief Main handler for unicode input
@@ -391,39 +391,39 @@ bool process_record_unicode(uint16_t keycode, keyrecord_t *record) {
         keycode = QK_LAYER_TAP_GET_TAP_KEYCODE(keycode);
     }
 
-    if (unicode_typing_mode == UCTM_WIDE) {
-        if (((KC_A <= keycode) && (keycode <= KC_0)) || keycode == KC_SPACE) {
-            return process_record_glyph_replacement(keycode, record, unicode_range_translator_wide);
-        }
-    } else if (unicode_typing_mode == UCTM_SCRIPT) {
-        if (((KC_A <= keycode) && (keycode <= KC_0)) || keycode == KC_SPACE) {
-            return process_record_glyph_replacement(keycode, record, unicode_range_translator_script);
-        }
-    } else if (unicode_typing_mode == UCTM_BLOCKS) {
-        if (((KC_A <= keycode) && (keycode <= KC_0)) || keycode == KC_SPACE) {
-            return process_record_glyph_replacement(keycode, record, unicode_range_translator_boxes);
-        }
-    } else if (unicode_typing_mode == UCTM_REGIONAL) {
-        if (((KC_A <= keycode) && (keycode <= KC_0)) || keycode == KC_SPACE) {
-            if (!process_record_glyph_replacement(keycode, record, unicode_range_translator_regional)) {
-                wait_us(500);
-                tap_unicode_glyph_nomods(0x200C);
-                return false;
-            }
-        }
-    } else if (unicode_typing_mode == UCTM_SUPER) {
-        if (((KC_A <= keycode) && (keycode <= KC_0))) {
-            return process_record_glyph_replacement(keycode, record, unicode_lut_translator_super);
-        }
-    } else if (unicode_typing_mode == UCTM_COMIC) {
-        if (((KC_A <= keycode) && (keycode <= KC_0))) {
-            return process_record_glyph_replacement(keycode, record, unicode_lut_translator_comic);
-        }
-    } else if (unicode_typing_mode == UCTM_AUSSIE) {
-        return process_record_aussie(keycode, record);
-    } else if (unicode_typing_mode == UCTM_ZALGO) {
-        return process_record_zalgo(keycode, record);
-    }
+    // if (unicode_typing_mode == UCTM_WIDE) {
+    //     if (((KC_A <= keycode) && (keycode <= KC_0)) || keycode == KC_SPACE) {
+    //         return process_record_glyph_replacement(keycode, record, unicode_range_translator_wide);
+    //     }
+    // } else if (unicode_typing_mode == UCTM_SCRIPT) {
+    //     if (((KC_A <= keycode) && (keycode <= KC_0)) || keycode == KC_SPACE) {
+    //         return process_record_glyph_replacement(keycode, record, unicode_range_translator_script);
+    //     }
+    // } else if (unicode_typing_mode == UCTM_BLOCKS) {
+    //     if (((KC_A <= keycode) && (keycode <= KC_0)) || keycode == KC_SPACE) {
+    //         return process_record_glyph_replacement(keycode, record, unicode_range_translator_boxes);
+    //     }
+    // } else if (unicode_typing_mode == UCTM_REGIONAL) {
+    //     if (((KC_A <= keycode) && (keycode <= KC_0)) || keycode == KC_SPACE) {
+    //         if (!process_record_glyph_replacement(keycode, record, unicode_range_translator_regional)) {
+    //             wait_us(500);
+    //             tap_unicode_glyph_nomods(0x200C);
+    //             return false;
+    //         }
+    //     }
+    // } else if (unicode_typing_mode == UCTM_SUPER) {
+    //     if (((KC_A <= keycode) && (keycode <= KC_0))) {
+    //         return process_record_glyph_replacement(keycode, record, unicode_lut_translator_super);
+    //     }
+    // } else if (unicode_typing_mode == UCTM_COMIC) {
+    //     if (((KC_A <= keycode) && (keycode <= KC_0))) {
+    //         return process_record_glyph_replacement(keycode, record, unicode_lut_translator_comic);
+    //     }
+    // } else if (unicode_typing_mode == UCTM_AUSSIE) {
+    //     return process_record_aussie(keycode, record);
+    // } else if (unicode_typing_mode == UCTM_ZALGO) {
+    //     return process_record_zalgo(keycode, record);
+    // }
     return true;
 }
 

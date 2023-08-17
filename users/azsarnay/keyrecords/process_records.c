@@ -78,7 +78,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
 
-        case KC_DIABLO_CLEAR: // reset all Diablo timers, disabling them
 #ifdef TAP_DANCE_ENABLE
             if (record->event.pressed) {
                 for (uint8_t index = 0; index < 4; index++) {

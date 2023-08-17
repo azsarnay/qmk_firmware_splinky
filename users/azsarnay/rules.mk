@@ -1,9 +1,9 @@
 SRC += $(USER_PATH)/azsarnay.c \
-        $(USER_PATH)/callbacks.c \
-        $(USER_PATH)/keyrecords/process_records.c \
-        $(USER_PATH)/keyrecords/tapping.c \
-        $(USER_PATH)/eeconfig_users.c
-        $(USER_PATH)/keyrecords/secrets.c \
+    $(USER_PATH)/callbacks.c \
+    $(USER_PATH)/keyrecords/process_records.c \
+    $(USER_PATH)/keyrecords/tapping.c \
+    $(USER_PATH)/eeconfig_users.c \
+    $(USER_PATH)/keyrecords/secrets.c
 
 
 ifneq ($(PLATFORM),CHIBIOS)
@@ -37,7 +37,7 @@ endif
 
 RGB_MATRIX_ENABLE ?= no
 ifneq ($(strip $(RGB_MATRIX_ENABLE)), no)
-    SRC += rgb_matrix_stuff.c
+    SRC += $(USER_PATH)/rgb/rgb_matrix_stuff.c
 endif
 
 
@@ -74,7 +74,7 @@ ifeq ($(strip $(PROTOCOL)), VUSB)
     NKRO_ENABLE       := no
 endif
 
-feq ($(strip $(PER_KEY_TAPPING)), yes)
+ifeq ($(strip $(PER_KEY_TAPPING)), yes)
     OPT_DEFS += -DPER_KEY_TAPPING
 endif
 

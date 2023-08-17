@@ -18,8 +18,6 @@
 
 #include "azsarnay.h"
 
-enw
-
 #define LAYOUT_charybdis_3x5_wrapper(...) LAYOUT_charybdis_3x5(__VA_ARGS__)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {

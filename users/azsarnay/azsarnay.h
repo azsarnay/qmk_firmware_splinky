@@ -20,20 +20,14 @@
 #include "keyrecords/wrappers.h"
 #include "keyrecords/process_records.h"
 #include "callbacks.h"
-// #include "eeconfig_users.h"
 
 
 #if defined(RGB_MATRIX_ENABLE)
 #    include "rgb/rgb_matrix_stuff.h"
 #endif
-// #ifdef SPLIT_KEYBOARD
-// #    include "split/transport_sync.h"
-// #endif
+
 #ifdef POINTING_DEVICE_ENABLE
 #    include "pointing/pointing.h"
-#endif
-#ifdef OS_DETECTION_ENABLE
-#    include "os_detection.h"
 #endif
 #ifdef UNICODE_COMMON_ENABLE
 #    include "keyrecords/unicode.h"

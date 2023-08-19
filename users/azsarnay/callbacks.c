@@ -6,19 +6,19 @@
 #ifdef CUSTOM_DYNAMIC_MACROS_ENABLE
 #    include "keyrecords/dynamic_macros.h"
 #endif
-#ifdef I2C_SCANNER_ENABLE
-void housekeeping_task_i2c_scanner(void);
-void keyboard_post_init_i2c(void);
-#endif
+// #ifdef I2C_SCANNER_ENABLE
+// void housekeeping_task_i2c_scanner(void);
+// void keyboard_post_init_i2c(void);
+// #endif
 
-__attribute__((weak)) void keyboard_pre_init_keymap(void) {}
-void                       keyboard_pre_init_user(void) {
-    eeconfig_read_user_config(&userspace_config.raw);
-    if (!userspace_config.check) {
-        eeconfig_init_user();
-    }
-    keyboard_pre_init_keymap();
-}
+// __attribute__((weak)) void keyboard_pre_init_keymap(void) {}
+// void                       keyboard_pre_init_user(void) {
+//     eeconfig_read_user_config(&userspace_config.raw);
+//     if (!userspace_config.check) {
+//         eeconfig_init_user();
+//     }
+//     keyboard_pre_init_keymap();
+// }
 // Add reconfigurable functions here, for keymap customization
 // This allows for a global, userspace functions, and continued
 // customization of the keymap.  Use _keymap instead of _user
@@ -30,9 +30,9 @@ void                       keyboard_pre_init_user(void) {
 void keyboard_post_init_qp(void);
 #endif
 
-#if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
-uint32_t startup_exec(uint32_t trigger_time, void *cb_arg);
-#endif
+// #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
+// uint32_t startup_exec(uint32_t trigger_time, void *cb_arg);
+// #endif
 
 __attribute__((weak)) void keyboard_post_init_keymap(void) {}
 void                       keyboard_post_init_user(void) {
@@ -42,9 +42,9 @@ void                       keyboard_post_init_user(void) {
 #if defined(CUSTOM_RGB_MATRIX)
     keyboard_post_init_rgb_matrix();
 #endif
-#if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
-    keyboard_post_init_transport_sync();
-#endif
+// #if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
+//     keyboard_post_init_transport_sync();
+// #endif
 #ifdef I2C_SCANNER_ENABLE
     keyboard_post_init_i2c();
 #endif
@@ -62,9 +62,9 @@ void                       keyboard_post_init_user(void) {
 #ifdef CUSTOM_DYNAMIC_MACROS_ENABLE
     dynamic_macro_init();
 #endif
-#if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
-    defer_exec(100, startup_exec, NULL);
-#endif
+// #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
+//     defer_exec(100, startup_exec, NULL);
+// #endif
 
     keyboard_post_init_keymap();
 }
@@ -151,66 +151,66 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 // Runs state check and changes underglow color and animation
-__attribute__((weak)) layer_state_t default_layer_state_set_keymap(layer_state_t state) {
-    return state;
-}
+// __attribute__((weak)) layer_state_t default_layer_state_set_keymap(layer_state_t state) {
+//     return state;
+// }
 
-#if defined(AUDIO_ENABLE) && defined(DEFAULT_LAYER_SONGS)
-static float default_layer_songs[][MAX_LAYER][2] = DEFAULT_LAYER_SONGS;
-#endif
+// #if defined(AUDIO_ENABLE) && defined(DEFAULT_LAYER_SONGS)
+// static float default_layer_songs[][MAX_LAYER][2] = DEFAULT_LAYER_SONGS;
+// #endif
 
-layer_state_t default_layer_state_set_user(layer_state_t state) {
-    if (!is_keyboard_master()) {
-        return state;
-    }
+// layer_state_t default_layer_state_set_user(layer_state_t state) {
+//     if (!is_keyboard_master()) {
+//         return state;
+//     }
 
-    state = default_layer_state_set_keymap(state);
-#if defined(CUSTOM_RGBLIGHT)
-    state = default_layer_state_set_rgb_light(state);
-#endif
+//     state = default_layer_state_set_keymap(state);
+// #if defined(CUSTOM_RGBLIGHT)
+//     state = default_layer_state_set_rgb_light(state);
+// #endif
 
-    static bool has_init_been_ran = false;
-    // We don't want to run this the first time it's called, since it's read from eeeprom and called
-    // as part of the startup process. But after that, it's okay.
-    if (has_init_been_ran) {
-#if defined(AUDIO_ENABLE) && defined(DEFAULT_LAYER_SONGS)
-        if (get_highest_layer(state) < MAX_LAYER) {
-            PLAY_SONG(default_layer_songs[get_highest_layer(state)]);
-        }
-#endif
-        eeconfig_update_default_layer(state);
-    } else {
-        has_init_been_ran = true;
-    }
+//     static bool has_init_been_ran = false;
+//     // We don't want to run this the first time it's called, since it's read from eeeprom and called
+//     // as part of the startup process. But after that, it's okay.
+//     if (has_init_been_ran) {
+// #if defined(AUDIO_ENABLE) && defined(DEFAULT_LAYER_SONGS)
+//         if (get_highest_layer(state) < MAX_LAYER) {
+//             PLAY_SONG(default_layer_songs[get_highest_layer(state)]);
+//         }
+// #endif
+//         eeconfig_update_default_layer(state);
+//     } else {
+//         has_init_been_ran = true;
+//     }
 
-    return state;
-}
+//     return state;
+// }
 
 __attribute__((weak)) void led_set_keymap(uint8_t usb_led) {}
 void                       led_set_user(uint8_t usb_led) {
     led_set_keymap(usb_led);
 }
 
-__attribute__((weak)) void eeconfig_init_keymap(void) {}
-void                       eeconfig_init_user(void) {
-    userspace_config.raw              = 0;
-    userspace_config.rgb_layer_change = true;
-    userspace_config.check            = true;
-#if defined(OLED_ENABLE)
-    userspace_config.oled_brightness = OLED_BRIGHTNESS;
-#else
-    userspace_config.oled_brightness = 255;
-#endif
-    eeconfig_update_user_config(&userspace_config.raw);
-    eeconfig_init_keymap();
-}
+// __attribute__((weak)) void eeconfig_init_keymap(void) {}
+// void                       eeconfig_init_user(void) {
+//     userspace_config.raw              = 0;
+//     userspace_config.rgb_layer_change = true;
+//     userspace_config.check            = true;
+// #if defined(OLED_ENABLE)
+//     userspace_config.oled_brightness = OLED_BRIGHTNESS;
+// #else
+//     userspace_config.oled_brightness = 255;
+// #endif
+//     eeconfig_update_user_config(&userspace_config.raw);
+//     eeconfig_init_keymap();
+// }
 
-void eeconfig_init_user_datablock(void) {
-#if (EECONFIG_USER_DATA_SIZE) > 4
-    uint8_t eeconfig_empty_temp[(EECONFIG_USER_DATA_SIZE)-4] = {0};
-    eeconfig_update_user_data(eeconfig_empty_temp);
-#endif
-}
+// void eeconfig_init_user_datablock(void) {
+// #if (EECONFIG_USER_DATA_SIZE) > 4
+//     uint8_t eeconfig_empty_temp[(EECONFIG_USER_DATA_SIZE)-4] = {0};
+//     eeconfig_update_user_data(eeconfig_empty_temp);
+// #endif
+// }
 
 #ifdef SPLIT_KEYBOARD
 __attribute__((weak)) void matrix_slave_scan_keymap(void) {}
@@ -258,18 +258,18 @@ void                       housekeeping_task_user(void) {
 // #ifdef TAP_DANCE_ENABLE // Run Diablo 3 macro checking code.
 //     run_diablo_macro_check();
 // #endif // TAP_DANCE_ENABLE
-#if defined(CUSTOM_RGB_MATRIX)
-    housekeeping_task_rgb_matrix();
-#endif
-#ifdef I2C_SCANNER_ENABLE
-    housekeeping_task_i2c_scanner();
-#endif
+// #if defined(CUSTOM_RGB_MATRIX)
+//     housekeeping_task_rgb_matrix();
+// #endif
+// #ifdef I2C_SCANNER_ENABLE
+//     housekeeping_task_i2c_scanner();
+// #endif
 #ifdef CUSTOM_OLED_DRIVER
     housekeeping_task_oled();
 #endif
-#if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
-    housekeeping_task_transport_sync();
-#endif
+// #if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSACTION_IDS_USER)
+//     housekeeping_task_transport_sync();
+// #endif
 
     housekeeping_task_keymap();
 }

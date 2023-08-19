@@ -2,8 +2,8 @@ SRC += $(USER_PATH)/azsarnay.c \
     $(USER_PATH)/callbacks.c \
     $(USER_PATH)/keyrecords/process_records.c \
     $(USER_PATH)/keyrecords/tapping.c \
-    $(USER_PATH)/eeconfig_users.c \
-    $(USER_PATH)/keyrecords/secrets.c
+    $(USER_PATH)/keyrecords/secrets.c 
+    # $(USER_PATH)/eeconfig_users.c \
 
 
 ifneq ($(PLATFORM),CHIBIOS)
@@ -144,14 +144,14 @@ ifeq ($(strip $(POINTING_DEVICE_ENABLE)), yes)
     endif
 endif
 
-CUSTOM_SPLIT_TRANSPORT_SYNC ?= yes
-ifeq ($(strip $(CUSTOM_SPLIT_TRANSPORT_SYNC)), yes)
-    ifeq ($(strip $(SPLIT_KEYBOARD)), yes)
-        QUANTUM_LIB_SRC += $(USER_PATH)/split/transport_sync.c
-        OPT_DEFS += -DCUSTOM_SPLIT_TRANSPORT_SYNC
-    endif
+# CUSTOM_SPLIT_TRANSPORT_SYNC ?= yes
+# ifeq ($(strip $(CUSTOM_SPLIT_TRANSPORT_SYNC)), yes)
+#     ifeq ($(strip $(SPLIT_KEYBOARD)), yes)
+#         QUANTUM_LIB_SRC += $(USER_PATH)/split/transport_sync.c
+#         OPT_DEFS += -DCUSTOM_SPLIT_TRANSPORT_SYNC
+#     endif
 
-endif
+# endif
 
 CUSTOM_BOOTMAGIC_ENABLE ?= yes
 ifeq ($(strip $(CUSTOM_BOOTMAGIC_ENABLE)), yes)

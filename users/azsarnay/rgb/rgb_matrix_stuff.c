@@ -40,20 +40,20 @@ void rgb_matrix_layer_helper(uint8_t hue, uint8_t sat, uint8_t val, uint8_t mode
     }
 }
 
-void housekeeping_task_rgb_matrix(void) {
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS)
-    if (userspace_config.rgb_matrix_idle_anim && rgb_matrix_get_mode() == RGB_MATRIX_TYPING_HEATMAP && sync_timer_elapsed32(hypno_timer) > 15000) {
-        rgb_matrix_mode_noeeprom(RGB_MATRIX_REST_MODE);
-    }
-#endif
-}
+// void housekeeping_task_rgb_matrix(void) {
+// #if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS)
+//     if (userspace_config.rgb_matrix_idle_anim && rgb_matrix_get_mode() == RGB_MATRIX_TYPING_HEATMAP && sync_timer_elapsed32(hypno_timer) > 15000) {
+//         rgb_matrix_mode_noeeprom(RGB_MATRIX_REST_MODE);
+//     }
+// #endif
+// }
 
 void keyboard_post_init_rgb_matrix(void) {
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS)
-    if (userspace_config.rgb_matrix_idle_anim) {
-        rgb_matrix_mode_noeeprom(RGB_MATRIX_REST_MODE);
-    }
-#endif
+// #if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS)
+//     if (userspace_config.rgb_matrix_idle_anim) {
+//         rgb_matrix_mode_noeeprom(RGB_MATRIX_REST_MODE);
+//     }
+// #endif
     if (userspace_config.rgb_layer_change) {
         rgb_matrix_set_flags(LED_FLAG_UNDERGLOW | LED_FLAG_KEYLIGHT | LED_FLAG_INDICATOR);
     } else {
@@ -62,25 +62,25 @@ void keyboard_post_init_rgb_matrix(void) {
 }
 
 bool process_record_user_rgb_matrix(uint16_t keycode, keyrecord_t *record) {
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS)
-    hypno_timer = sync_timer_read32();
-    if (userspace_config.rgb_matrix_idle_anim && rgb_matrix_get_mode() == RGB_MATRIX_REST_MODE) {
-        rgb_matrix_mode_noeeprom(RGB_MATRIX_TYPING_HEATMAP);
-    }
-#endif
+// #if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS)
+//     hypno_timer = sync_timer_read32();
+//     if (userspace_config.rgb_matrix_idle_anim && rgb_matrix_get_mode() == RGB_MATRIX_REST_MODE) {
+//         rgb_matrix_mode_noeeprom(RGB_MATRIX_TYPING_HEATMAP);
+//     }
+// #endif
     switch (keycode) {
-        case RGB_IDL: // This allows me to use underglow as layer indication, or as normal
-#if defined(RGB_MATRIX_ENABLE) && defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS)
-            if (record->event.pressed) {
-                userspace_config.rgb_matrix_idle_anim ^= 1;
-                dprintf("RGB Matrix Idle Animation [EEPROM]: %u\n", userspace_config.rgb_matrix_idle_anim);
-                eeconfig_update_user_config(&userspace_config.raw);
-                if (userspace_config.rgb_matrix_idle_anim) {
-                    rgb_matrix_mode_noeeprom(RGB_MATRIX_TYPING_HEATMAP);
-                }
-            }
-#endif
-            break;
+//         case RGB_IDL: // This allows me to use underglow as layer indication, or as normal
+// #if defined(RGB_MATRIX_ENABLE) && defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS)
+//             if (record->event.pressed) {
+//                 userspace_config.rgb_matrix_idle_anim ^= 1;
+//                 // dprintf("RGB Matrix Idle Animation [EEPROM]: %u\n", userspace_config.rgb_matrix_idle_anim);
+//                 // eeconfig_update_user_config(&userspace_config.raw);
+//                 if (userspace_config.rgb_matrix_idle_anim) {
+//                     rgb_matrix_mode_noeeprom(RGB_MATRIX_TYPING_HEATMAP);
+//                 }
+//             }
+// #endif
+//             break;
     }
     return true;
 }

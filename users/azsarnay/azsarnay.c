@@ -276,12 +276,12 @@ void do_scan(void) {
 
 uint16_t scan_timer = 0;
 
-void housekeeping_task_i2c_scanner(void) {
-    if (timer_elapsed(scan_timer) > 5000) {
-        do_scan();
-        scan_timer = timer_read();
-    }
-}
+// void housekeeping_task_i2c_scanner(void) {
+//     if (timer_elapsed(scan_timer) > 5000) {
+//         do_scan();
+//         scan_timer = timer_read();
+//     }
+// }
 
 void keyboard_post_init_i2c(void) {
     i2c_init();
@@ -367,57 +367,57 @@ void format_layer_bitmap_string(char *buffer, layer_state_t state, layer_state_t
     *buffer = 0;
 }
 
-#if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
-os_variant_t os_type;
+// #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
+// os_variant_t os_type;
 
-uint32_t startup_exec(uint32_t trigger_time, void *cb_arg) {
-    if (is_keyboard_master()) {
-        os_type = detected_host_os();
-        if (os_type) {
-            bool is_mac = (os_type == OS_MACOS) || (os_type == OS_IOS);
-            if (keymap_config.swap_lctl_lgui != is_mac) {
-                keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = is_mac;
-                eeconfig_update_keymap(keymap_config.raw);
-            }
-#    ifdef UNICODE_COMMON_ENABLE
-            set_unicode_input_mode_soft(keymap_config.swap_lctl_lgui ? UNICODE_MODE_MACOS : UNICODE_MODE_WINCOMPOSE);
-#    endif
-            switch (os_type) {
-                case OS_UNSURE:
-                    xprintf("unknown OS Detected\n");
-                    break;
-                case OS_LINUX:
-                    xprintf("Linux Detected\n");
-                    break;
-                case OS_WINDOWS:
-                    xprintf("Windows Detected\n");
-                    break;
-#    if 0
-                case OS_WINDOWS_UNSURE:
-                    xprintf("Windows? Detected\n");
-                    break;
-#    endif
-                case OS_MACOS:
-                    xprintf("MacOS Detected\n");
-                    break;
-                case OS_IOS:
-                    xprintf("iOS Detected\n");
-                    break;
-#    if 0
-                case OS_PS5:
-                    xprintf("PlayStation 5 Detected\n");
-                    break;
-                case OS_HANDHELD:
-                    xprintf("Nintend Switch/Quest 2 Detected\n");
-                    break;
-#    endif
-            }
-        }
-    }
+// uint32_t startup_exec(uint32_t trigger_time, void *cb_arg) {
+//     if (is_keyboard_master()) {
+//         os_type = detected_host_os();
+//         if (os_type) {
+//             bool is_mac = (os_type == OS_MACOS) || (os_type == OS_IOS);
+//             if (keymap_config.swap_lctl_lgui != is_mac) {
+//                 keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = is_mac;
+//                 eeconfig_update_keymap(keymap_config.raw);
+//             }
+// #    ifdef UNICODE_COMMON_ENABLE
+//             set_unicode_input_mode_soft(keymap_config.swap_lctl_lgui ? UNICODE_MODE_MACOS : UNICODE_MODE_WINCOMPOSE);
+// #    endif
+//             switch (os_type) {
+//                 case OS_UNSURE:
+//                     xprintf("unknown OS Detected\n");
+//                     break;
+//                 case OS_LINUX:
+//                     xprintf("Linux Detected\n");
+//                     break;
+//                 case OS_WINDOWS:
+//                     xprintf("Windows Detected\n");
+//                     break;
+// #    if 0
+//                 case OS_WINDOWS_UNSURE:
+//                     xprintf("Windows? Detected\n");
+//                     break;
+// #    endif
+//                 case OS_MACOS:
+//                     xprintf("MacOS Detected\n");
+//                     break;
+//                 case OS_IOS:
+//                     xprintf("iOS Detected\n");
+//                     break;
+// #    if 0
+//                 case OS_PS5:
+//                     xprintf("PlayStation 5 Detected\n");
+//                     break;
+//                 case OS_HANDHELD:
+//                     xprintf("Nintend Switch/Quest 2 Detected\n");
+//                     break;
+// #    endif
+//             }
+//         }
+//     }
 
-    return os_type ? 0 : 500;
-}
-#endif
+//     return os_type ? 0 : 500;
+// }
+// #endif
 
 static host_driver_t *host_driver          = 0;
 static bool           host_driver_disabled = false;

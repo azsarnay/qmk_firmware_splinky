@@ -20,15 +20,15 @@
 #include "keyrecords/wrappers.h"
 #include "keyrecords/process_records.h"
 #include "callbacks.h"
-#include "eeconfig_users.h"
+// #include "eeconfig_users.h"
 
 
 #if defined(RGB_MATRIX_ENABLE)
 #    include "rgb/rgb_matrix_stuff.h"
 #endif
-#ifdef SPLIT_KEYBOARD
-#    include "split/transport_sync.h"
-#endif
+// #ifdef SPLIT_KEYBOARD
+// #    include "split/transport_sync.h"
+// #endif
 #ifdef POINTING_DEVICE_ENABLE
 #    include "pointing/pointing.h"
 #endif
@@ -71,7 +71,7 @@ void          matrix_scan_secret(void);
 layer_state_t layer_state_set_keymap(layer_state_t state);
 layer_state_t default_layer_state_set_keymap(layer_state_t state);
 void          led_set_keymap(uint8_t usb_led);
-void          eeconfig_init_keymap(void);
+// void          eeconfig_init_keymap(void);
 bool          hasAllBitsInMask(uint8_t value, uint8_t mask);
 
 // clang-format off
@@ -93,7 +93,7 @@ typedef union {
 // clang-format on
 
 
-_Static_assert(sizeof(userspace_config_t) == sizeof(uint32_t), "Userspace EECONFIG out of spec.");
+// _Static_assert(sizeof(userspace_config_t) == sizeof(uint32_t), "Userspace EECONFIG out of spec.");
 
 extern userspace_config_t userspace_config;
 

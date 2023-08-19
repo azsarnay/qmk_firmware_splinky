@@ -19,6 +19,8 @@
 #include <ctype.h>
 
 userspace_config_t userspace_config;
+#define AZSARNAY_UNICODE_MODE 1
+
 
 bool mod_key_press_timer(uint16_t code, uint16_t mod_code, bool pressed) {
     static uint16_t this_timer;
@@ -51,7 +53,12 @@ bool mod_key_press(uint16_t code, uint16_t mod_code, bool pressed, uint16_t this
     return false;
 }
 
+__attribute__((weak)) void keyboard_pre_init_keymap(void) {}
 
+void keyboard_pre_init_user(void) {
+    userspace_config.raw = eeconfig_read_user();
+    keyboard_pre_init_keymap();
+}
 // Add reconfigurable functions here, for keymap customization
 // This allows for a global, userspace functions, and continued
 // customization of the keymap.  Use _keymap instead of _user
@@ -62,144 +69,119 @@ __attribute__((weak)) void matrix_init_secret(void) {}
 // Call user matrix init, set default RGB colors and then
 // call the keymap's init function
 void matrix_init_user(void) {
-#if defined(BOOTLOADER_CATERINA) && defined(__AVR__)
-    DDRD &= ~(1 << 5);
-    PORTD &= ~(1 << 5);
-
-    DDRB &= ~(1 << 0);
-    PORTB &= ~(1 << 0);
-#endif
-
-    matrix_init_secret();
+#if (defined(UNICODE_ENABLE) || defined(UNICODEMAP_ENABLE) || defined(UCIS_ENABLE))
+    set_unicode_input_mode(AZSARNAY_UNICODE_MODE);
+    get_unicode_input_mode();
+#endif  // UNICODE_ENABLE
     matrix_init_keymap();
 }
 
 
+__attribute__((weak)) void keyboard_post_init_keymap(void) {}
 
-
-/**
- * @brief Performs exact match for modifier values
- *
- * @param value the modifer varible (get_mods/get_oneshot_mods/get_weak_mods)
- * @param mask the modifier mask to check for
- * @return true Has the exact modifiers specifed
- * @return false Does not have the exact modifiers specified
- */
-bool hasAllBitsInMask(uint8_t value, uint8_t mask) {
-    value &= 0xF;
-    mask &= 0xF;
-
-    return (value & mask) == mask;
+void keyboard_post_init_user(void) {
+#if defined(RGBLIGHT_ENABLE)
+    keyboard_post_init_rgb_light();
+#endif
+#if defined(RGB_MATRIX_ENABLE)
+    keyboard_post_init_rgb_matrix();
+#endif
+    keyboard_post_init_keymap();
 }
 
-/**
- * @brief Tap keycode, with no mods
- *
- * @param kc keycode to use
- */
-void tap_code16_nomods(uint16_t kc) {
-    uint8_t temp_mod = get_mods();
-    clear_mods();
-    clear_oneshot_mods();
-    tap_code16(kc);
-    set_mods(temp_mod);
+__attribute__((weak)) void shutdown_keymap(void) {}
+
+#ifdef RGB_MATRIX_ENABLE
+void rgb_matrix_update_pwm_buffers(void);
+#endif
+
+void shutdown_user(void) {
+#ifdef RGBLIGHT_ENABLE
+    rgblight_enable_noeeprom();
+    rgblight_mode_noeeprom(1);
+    rgblight_setrgb_red();
+#endif  // RGBLIGHT_ENABLE
+#ifdef RGB_MATRIX_ENABLE
+    // rgb_matrix_set_color_all(0xFF, 0x00, 0x00);
+    rgb_matrix_update_pwm_buffers();
+
+#endif  // RGB_MATRIX_ENABLE
+    shutdown_keymap();
 }
 
+__attribute__((weak)) void suspend_power_down_keymap(void) {}
 
+void suspend_power_down_user(void) {
+    suspend_power_down_keymap();
+}
 
-void format_layer_bitmap_string(char *buffer, layer_state_t state, layer_state_t default_state) {
-    for (int i = 0; i < 16; i++) {
-        if (i == 0 || i == 4 || i == 8 || i == 12) {
-            *buffer = ' ';
-            ++buffer;
-        }
+__attribute__((weak)) void suspend_wakeup_init_keymap(void) {}
 
-        uint8_t layer = i;
-        if ((default_state & ((layer_state_t)1 << layer)) != 0) {
-            *buffer = 'D';
-        } else if ((state & ((layer_state_t)1 << layer)) != 0) {
-            *buffer = '1';
-        } else {
-            *buffer = '_';
-        }
-        ++buffer;
+void suspend_wakeup_init_user(void) { suspend_wakeup_init_keymap(); }
+
+__attribute__((weak)) void matrix_scan_keymap(void) {}
+
+__attribute__((weak)) void matrix_scan_secret(void) {}
+
+// No global matrix scan code, so just run keymap's matrix
+// scan function
+void matrix_scan_user(void) {
+    static bool has_ran_yet;
+    if (!has_ran_yet) {
+        has_ran_yet = true;
+        startup_user();
     }
-    *buffer = 0;
+    matrix_scan_secret();
+    matrix_scan_keymap();
 }
 
-// #if defined(OS_DETECTION_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
-// os_variant_t os_type;
 
-// uint32_t startup_exec(uint32_t trigger_time, void *cb_arg) {
-//     if (is_keyboard_master()) {
-//         os_type = detected_host_os();
-//         if (os_type) {
-//             bool is_mac = (os_type == OS_MACOS) || (os_type == OS_IOS);
-//             if (keymap_config.swap_lctl_lgui != is_mac) {
-//                 keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = is_mac;
-//                 eeconfig_update_keymap(keymap_config.raw);
-//             }
-// #    ifdef UNICODE_COMMON_ENABLE
-//             set_unicode_input_mode_soft(keymap_config.swap_lctl_lgui ? UNICODE_MODE_MACOS : UNICODE_MODE_WINCOMPOSE);
-// #    endif
-//             switch (os_type) {
-//                 case OS_UNSURE:
-//                     xprintf("unknown OS Detected\n");
-//                     break;
-//                 case OS_LINUX:
-//                     xprintf("Linux Detected\n");
-//                     break;
-//                 case OS_WINDOWS:
-//                     xprintf("Windows Detected\n");
-//                     break;
-// #    if 0
-//                 case OS_WINDOWS_UNSURE:
-//                     xprintf("Windows? Detected\n");
-//                     break;
-// #    endif
-//                 case OS_MACOS:
-//                     xprintf("MacOS Detected\n");
-//                     break;
-//                 case OS_IOS:
-//                     xprintf("iOS Detected\n");
-//                     break;
-// #    if 0
-//                 case OS_PS5:
-//                     xprintf("PlayStation 5 Detected\n");
-//                     break;
-//                 case OS_HANDHELD:
-//                     xprintf("Nintend Switch/Quest 2 Detected\n");
-//                     break;
-// #    endif
-//             }
-//         }
-//     }
 
-//     return os_type ? 0 : 500;
-// }
-// #endif
+__attribute__((weak)) layer_state_t layer_state_set_keymap(layer_state_t state) { return state; }
 
-static host_driver_t *host_driver          = 0;
-static bool           host_driver_disabled = false;
-
-void set_keyboard_lock(bool status) {
-    if (!status && !host_get_driver()) {
-        host_set_driver(host_driver);
-    } else if (status && host_get_driver()) {
-        host_driver = host_get_driver();
-        clear_keyboard();
-        host_set_driver(0);
-    } else if (status) {
-        clear_keyboard();
+// on layer change, no matter where the change was initiated
+// Then runs keymap's layer change check
+layer_state_t layer_state_set_user(layer_state_t state) {
+    if (!is_keyboard_master()) {
+        return state;
     }
 
-    host_driver_disabled = status;
+    // state = update_tri_layer_state(state, _NAVNUM, _SYM, _ADJUST);
+#if defined(RGBLIGHT_ENABLE)
+    state = layer_state_set_rgb_light(state);
+#endif  // RGBLIGHT_ENABLE
+    return layer_state_set_keymap(state);
 }
 
-void toggle_keyboard_lock(void) {
-    set_keyboard_lock(!host_driver_disabled);
+__attribute__((weak)) layer_state_t default_layer_state_set_keymap(layer_state_t state) { return state; }
+
+// Runs state check and changes underglow color and animation
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+    if (!is_keyboard_master()) {
+        return state;
+    }
+
+    state = default_layer_state_set_keymap(state);
+    return state;
 }
 
-bool get_keyboard_lock(void) {
-    return host_driver_disabled;
+__attribute__((weak)) void led_set_keymap(uint8_t usb_led) {}
+
+// Any custom LED code goes here.
+void led_set_user(uint8_t usb_led) { led_set_keymap(usb_led); }
+
+__attribute__((weak)) void eeconfig_init_keymap(void) {}
+
+void eeconfig_init_user(void) {
+    userspace_config.raw              = 0;
+    userspace_config.rgb_layer_change = true;
+    eeconfig_update_user(userspace_config.raw);
+#if (defined(UNICODE_ENABLE) || defined(UNICODEMAP_ENABLE) || defined(UCIS_ENABLE))
+    set_unicode_input_mode(AZSARNAY_UNICODE_MODE);
+    get_unicode_input_mode();
+#else
+    eeprom_update_byte(EECONFIG_UNICODEMODE, AZSARNAY_UNICODE_MODE);
+#endif
+    eeconfig_init_keymap();
+    keyboard_init();
 }

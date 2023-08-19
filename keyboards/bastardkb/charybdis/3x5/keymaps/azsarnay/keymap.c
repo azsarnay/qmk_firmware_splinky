@@ -17,6 +17,7 @@
  */
 
 #include "azsarnay.h"
+#include QMK_KEYBOARD_H
 
 #define LAYOUT_charybdis_3x5_wrapper(...) LAYOUT_charybdis_3x5(__VA_ARGS__)
 

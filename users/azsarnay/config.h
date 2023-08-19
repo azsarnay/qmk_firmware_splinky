@@ -1,83 +1,23 @@
-// Copyright 2020 Christopher Courtney, aka Drashna Jael're  (@drashna) <drashna@live.com>
-// SPDX-License-Identifier: GPL-2.0-or-later
+/* Copyright 2020 Christopher Courtney, aka Drashna Jael're  (@drashna) <drashna@live.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #pragma once
 
-#ifdef IS_COMMAND
-#    undef IS_COMMAND
-#endif
-#define IS_COMMAND() (((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) == MOD_MASK_SHIFT)
-
-
-#ifdef POINTING_DEVICE_ENABLE
-#    include "pointing/pointing_config.h"
-#endif // POINTING_DEVICE_ENABLE
-
-#define UNICODE_SELECTED_MODES UNICODE_MODE_WINCOMPOSE, UNICODE_MODE_MACOS
-
-
-#if defined(PER_KEY_TAPPING)
-#    define PERMISSIVE_HOLD_PER_KEY
-#    define QUICK_TAP_TERM_PER_KEY
-#    define HOLD_ON_OTHER_KEY
-#    define RETRO_TAPPING_PER_KEY
-#    define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
-#    define TAPPING_TERM_PER_KEY
-#else
-#    undef PERMISSIVE_HOLD
-#endif
-
-
-/* Disable unused and unneeded features to reduce on firmware size */
-#ifdef LOCKING_SUPPORT_ENABLE
-#    undef LOCKING_SUPPORT_ENABLE
-#endif
-#ifdef LOCKING_RESYNC_ENABLE
-#    undef LOCKING_RESYNC_ENABLE
-#endif
-
-#ifdef CONVERT_TO_PROTON_C
-// pins that are available but not present on Pro Micro
-#    define A3 PAL_LINE(GPIOA, 3)
-#    define A4 PAL_LINE(GPIOA, 4)
-#    define A5 PAL_LINE(GPIOA, 5)
-#    define A6 PAL_LINE(GPIOA, 6)
-#    define A7 PAL_LINE(GPIOA, 7)
-#    define A8 PAL_LINE(GPIOA, 8)
-#    define A13 PAL_LINE(GPIOA, 13)
-#    define A14 PAL_LINE(GPIOA, 14)
-#    define A15 PAL_LINE(GPIOA, 15)
-#    define B10 PAL_LINE(GPIOB, 10)
-#    define B11 PAL_LINE(GPIOB, 11)
-#    define B12 PAL_LINE(GPIOB, 12)
-#    define C13 PAL_LINE(GPIOC, 13)
-#    define C14 PAL_LINE(GPIOC, 14)
-#    define C15 PAL_LINE(GPIOC, 15)
-#endif
-
-#define ENABLE_COMPILE_KEYCODE
-
-#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
-
-/* --- PRINTF_BYTE_TO_BINARY macro's --- */
-#define PRINTF_BINARY_PATTERN_INT8 "%c%c%c%c%c%c%c%c"
-#define PRINTF_BYTE_TO_BINARY_INT8(i) (((i)&0x80ll) ? '1' : '0'), (((i)&0x40ll) ? '1' : '0'), (((i)&0x20ll) ? '1' : '0'), (((i)&0x10ll) ? '1' : '0'), (((i)&0x08ll) ? '1' : '0'), (((i)&0x04ll) ? '1' : '0'), (((i)&0x02ll) ? '1' : '0'), (((i)&0x01ll) ? '1' : '0')
-
-#define PRINTF_BINARY_PATTERN_INT16 PRINTF_BINARY_PATTERN_INT8 " " PRINTF_BINARY_PATTERN_INT8
-#define PRINTF_BYTE_TO_BINARY_INT16(i) PRINTF_BYTE_TO_BINARY_INT8((i) >> 8), PRINTF_BYTE_TO_BINARY_INT8(i)
-#define PRINTF_BINARY_PATTERN_INT32 PRINTF_BINARY_PATTERN_INT16 " " PRINTF_BINARY_PATTERN_INT16
-#define PRINTF_BYTE_TO_BINARY_INT32(i) PRINTF_BYTE_TO_BINARY_INT16((i) >> 16), PRINTF_BYTE_TO_BINARY_INT16(i)
-#define PRINTF_BINARY_PATTERN_INT64 PRINTF_BINARY_PATTERN_INT32 " " PRINTF_BINARY_PATTERN_INT32
-#define PRINTF_BYTE_TO_BINARY_INT64(i) PRINTF_BYTE_TO_BINARY_INT32((i) >> 32), PRINTF_BYTE_TO_BINARY_INT32(i)
-/* --- end macros --- */
-
-// #ifndef EECONFIG_USER_DATA_SIZE
-// #    define EECONFIG_USER_DATA_SIZE 8
-// #endif
-
-
 // Use custom magic number so that when switching branches, EEPROM always gets reset
-// #define EECONFIG_MAGIC_NUMBER (uint16_t)0x1339
+#define EECONFIG_MAGIC_NUMBER (uint16_t)0x1339
 
 /* Set Polling rate to 1000Hz */
 #define USB_POLLING_INTERVAL_MS 1
@@ -169,11 +109,10 @@
 #   define DISABLE_RGB_MATRIX_SPLASH							// Full gradient & value pulse away from a single key hit then fades value out
 #   define DISABLE_RGB_MATRIX_MULTISPLASH						// Full gradient & value pulse away from multiple key hits then fades value out
 #   define DISABLE_RGB_MATRIX_SOLID_SPLASH						// Hue & value pulse away from a single key hit then fades value out
-#   define DISABLE_RGB_MATRIX_SOLID_MULTISPLASH
+#   define DISABLE_RGB_MATRIX_SOLID_MULTISPLASH					// Hue & value pulse away from multiple key hits then fades value out
 #   define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_RAINDROPS // Sets the default mode, if none has been set
 #   define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_RAINDROPS
 #   define RGB_MATRIX_STARTUP_HUE 96 // Sets the default hue value, if none has been set
-#    undef RGB_MATRIX_DEFAULT_HUE					// Hue & value pulse away from multiple key hits then fades value out
 #   define RGB_MATRIX_DEFAULT_HUE 96
 #   define RGB_MATRIX_STARTUP_SAT 255 // Sets the default saturation value, if none has been set
 #   define RGB_MATRIX_DEFAULT_SAT 255
@@ -186,7 +125,6 @@
 #    define SPLIT_TRANSPORT_MIRROR
 
 #endif
-
 
 #ifndef ONESHOT_TAP_TOGGLE
 #    define ONESHOT_TAP_TOGGLE 2

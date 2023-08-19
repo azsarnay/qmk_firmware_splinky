@@ -11,12 +11,12 @@ ifneq ($(PLATFORM),CHIBIOS)
 endif
 SPACE_CADET_ENABLE    = yes
 GRAVE_ESC_ENABLE      = no
-NO_SECRETS = yes
-# OS_DETECTION_ENABLE    = yes
+NO_SECRETS = no
 
 DEBOUNCE_TYPE        = asym_eager_defer_pk
 DEFERRED_EXEC_ENABLE = yes
-OS_DETECTION_ENABLE  = yes
+OS_DETECTION_ENABLE  = no
+CUSTOM_POINTING_DEVICE = no
 
 ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
     SRC += tap_dances.c

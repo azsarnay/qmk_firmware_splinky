@@ -104,9 +104,9 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _________________MCRO_L3___________________       MMO,      GAME,      XXXXXXX,  LCA(KC_1),  LCA(KC_2)
 #define _________________MCRO_LT___________________       XXXXXXX,  XXXXXXX,   XXXXXXX
 
-#define _________________MCRO_R1___________________       KC_SEC10,  XXXXXXX,   KC_SEC6,  KC_SEC4,   KC_SEC1
-#define _________________MCRO_R2___________________       UC_FLIP,  UC_SHRG,    KC_SEC7,  KC_SEC5,   KC_SEC2
-#define _________________MCRO_R3___________________       KC_PIC,   KC_MACPIC,  KC_SEC9,  KC_SEC8,   KC_SEC3
+#define _________________MCRO_R1___________________       KC_SEC8,  UC_TABL,   KC_SEC5,     KC_SEC4,   KC_SEC1
+#define _________________MCRO_R2___________________       UC_FLIP,  UC_SHRG,    UC_FLIP_SM,  UC_DISA,   KC_SEC2
+#define _________________MCRO_R3___________________       KC_PIC,   KC_MACPIC,  KC_SEC7,     KC_SEC6,   KC_SEC3
 #define _________________MCRO_RT___________________       XXXXXXX,  XXXXXXX
 
 #define _________________BROWSER_L1________________       MAC_WIN_LEFT, MAC_WIN_RIGHT,    TAB_NEW,     TAB_REOP,      MAC_EXPOSE

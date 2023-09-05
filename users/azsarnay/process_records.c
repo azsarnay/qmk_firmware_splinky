@@ -36,6 +36,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 send_unicode_string("(ノಠ痊ಠ)ノ彡┻━┻");
             }
             break;
+        case UC_FLIP_SM:
+            if (record->event.pressed) {
+                send_unicode_string("(╯°□°)╯︵ ┻━┻");
+            }
+            break;
         case UC_TABL:
             if (record->event.pressed) {
                 send_unicode_string("┬─┬ノ( º _ ºノ)");

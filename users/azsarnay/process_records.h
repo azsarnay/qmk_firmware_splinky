@@ -68,6 +68,7 @@ enum userspace_custom_keycodes {
     KC_CCCV,                        // Hold to copy, tap to paste
     KC_NUKE,                        // NUCLEAR LAUNCH DETECTED!!!
     UC_FLIP,                        // (ಠ痊ಠ)┻━┻
+    UC_FLIP_SM,                     // (╯°□°)╯︵ ┻━┻
     UC_TABL,                        // ┬─┬ノ( º _ ºノ)
     UC_SHRG,                        // ¯\_(ツ)_/¯
     UC_DISA,                        // ಠ_ಠ

@@ -45,16 +45,15 @@ NOTE: These are all the same length.  If you do a search/replace
 #define ______________COLEMAK_MOD_DH_L3____________       KC_Z,    KC_X,    KC_C,    KC_D,    KC_V
 #define ________COLEMAK_MOD_DH_L2_CHARYBDIS________       LT(_POINTER, KC_A),    KC_R,    KC_S,    KC_T,    KC_G
 
-#define ______________COLEMAK_MOD_DH_L1_HRMod______       KC_Q,    LALT_T(KC_W),LSFT_T(KC_F),RCTL_T(KC_P),    CMD_T(KC_B)
-#define ______________COLEMAK_MOD_DH_L2_HRMod______       KC_A,    LALT_T(KC_R),LSFT_T(KC_S),RCTL_T(KC_T),    KC_G
-
+#define ______________COLEMAK_MOD_DH_L1_HRMod______       LGUI_T(KC_Q),    LALT_T(KC_W),LSFT_T(KC_F),RCTL_T(KC_P),    CMD_T(KC_B)
+#define ______________COLEMAK_MOD_DH_L2_HRMod______       LGUI_T(KC_A),    LALT_T(KC_R),LSFT_T(KC_S),RCTL_T(KC_T),    CMD_T(KC_G)
 #define ______________COLEMAK_MOD_DH_R1____________       KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN
 #define ______________COLEMAK_MOD_DH_R2____________       KC_M,    KC_N,    KC_E,    KC_I,    KC_O
 #define ______________COLEMAK_MOD_DH_R3____________       KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLASH
 #define ________COLEMAK_MOD_DH_R2_CHARYBDIS________       KC_M,    KC_N,    LT(_POINTER, KC_E), KC_I, KC_O
 
-#define ______________COLEMAK_MOD_DH_R1_HRMod______       KC_J,    RCTL_T(KC_L),LSFT_T(KC_U),LALT_T(KC_Y),    KC_SCLN
-#define ______________COLEMAK_MOD_DH_R2_HRMod______       KC_M,    RCTL_T(KC_N),LSFT_T(KC_E),LALT_T(KC_I),    KC_O
+#define ______________COLEMAK_MOD_DH_R1_HRMod______       LGUI_T(KC_J),    RCTL_T(KC_L),LSFT_T(KC_U),LALT_T(KC_Y),    CMD_T(KC_SCLN)
+#define ______________COLEMAK_MOD_DH_R2_HRMod______       LGUI_T(KC_M),    RCTL_T(KC_N),LSFT_T(KC_E),LALT_T(KC_I),    CMD_T(KC_O)
 
 #define _____________BASE_LEFT_THUMB_______________		   LT(_BROWSER,KC_ESC),LT(_NAVNUM,KC_SPC), RCTL_T(KC_TAB)
 #define _____________BASE_RIGHT_THUMB______________      LT(_SYM,KC_ENT),LSFT_T(KC_DEL),  LT(_TOG,KC_BSPC)
@@ -66,9 +65,9 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _________________NAVNUM_L3_________________        KC_BOTTM,KC_PSTHIST,KC_CMNT, KC_UNDO,  KC_REDO
 #define _________________NAVNUM_LT_________________        XXXXXXX,    XXXXXXX,    XXXXXXX
 
-#define _________________NAVNUM_R1_________________        KC_LSFT, LGUI_T(KC_7),  KC_8, KC_9, KC_SLASH
-#define _________________NAVNUM_R2_________________        KC_MINS, KC_4,  KC_5, KC_6, KC_PLUS 
-#define _________________NAVNUM_R3_________________        KC_RCTL, KC_1,  KC_2, KC_3, KC_DOT
+#define _________________NAVNUM_R1_________________        KC_LSFT, KC_7,         KC_8,         KC_9,         KC_SLASH
+#define _________________NAVNUM_R2_________________        KC_MINS, KC_4,         KC_5,         KC_6,         KC_PLUS 
+#define _________________NAVNUM_R3_________________        KC_RCTL, LGUI_T(KC_1), LALT_T(KC_2), LSFT_T(KC_3), CMD_T(KC_DOT)
 #define _________________NAVNUM_RT_________________        LALT_T(KC_EQL), SYM, LGUI_T(KC_0)
 #define _________________NAVNUM_RT_CHARYBDIS_______        LALT_T(KC_EQL), KC_0
 
@@ -91,6 +90,7 @@ NOTE: These are all the same length.  If you do a search/replace
 #define _________________SYM_R2____________________       KC_MINS,  KC_RPRN, KC_COMM,  KC_DOT,   XXXXXXX
 #define _________________SYM_R3____________________       KC_UNDS,  KC_GT,   KC_DQUO,  KC_QUOT,  KC_PIPE
 #define _________________SYM_RT____________________       MCRO,    MCRO
+
 
 #define __________________TOG_L1___________________       XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX
 #define __________________TOG_L2___________________       XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX
@@ -141,28 +141,37 @@ NOTE: These are all the same length.  If you do a search/replace
 #define __________________MOUSE_RT_________________        XXXXXXX, COLEMAK
 
 
-#define ___________________MMO_L1__________________        KC_1, KC_2,  KC_W,  KC_3,    KC_4
-#define ___________________MMO_L2__________________        KC_5, KC_A,  KC_S,  KC_D,    KC_6
-#define ___________________MMO_L3__________________        KC_7, KC_8,  KC_9,  KC_0,    KC_EQL
+// Special characters usable in wow that are open:
+// KC_PGDN, KC_GRV, KC_BSLS, KC_MINS, KC_LBRC, KC_QUOT, KC_PGUP, KC_COMM, KC_DOT, KC_SCLN, KC_EQL
+
+#define ___________________MMO_L1__________________        KC_1, KC_2,     KC_W,    KC_3,       KC_4
+#define ___________________MMO_L2__________________        KC_5, KC_Q,     KC_R,    KC_T,       KC_6
+#define ___________________MMO_L3__________________        KC_7, KC_8,     KC_9,    KC_0,       KC_U
 #define ___________________MMO_LT__________________        LSFT_T(KC_N), KC_SPC, LALT_T(KC_C)
 
-#define ___________________MMO_R1__________________        KC_X, KC_P,     KC_I,  KC_O,   KC_TAB
-#define ___________________MMO_R2__________________        KC_Y, KC_BTN1,  KC_BTN2,  DRGSCRL,    KC_B
-#define ___________________MMO_R3__________________        KC_Z, KC_A,     KC_BTN3,     KC_D,      KC_LBRC
+// #define ___________________MMO_L2__________________        KC_5, KC_A,  KC_S,  KC_D,    KC_6
+
+#define ___________________MMO_R1__________________        KC_F, KC_A,    KC_W,     KC_D,     KC_TAB
+#define ___________________MMO_R2__________________        KC_G, KC_BTN1, KC_BTN2,  DRGSCRL,  KC_K
+#define ___________________MMO_R3__________________        KC_H, KC_A,    KC_BTN3,  KC_D,     KC_RBRC
 #define ___________________MMO_RT__________________        LCTL_T(KC_E), LT(_MMOL2,KC_ESC)
 
 
 #define ___________________MMOL2_L1________________        KC_F1, KC_F2,   KC_W,    KC_F3,    KC_F4
-#define ___________________MMOL2_L2________________        KC_F5, KC_A,    KC_S,    KC_D,     KC_F6
+#define ___________________MMOL2_L2________________        KC_F5, KC_F12,  KC_L,    KC_M,     KC_F6
 #define ___________________MMOL2_L3________________        KC_F7, KC_F8,   KC_F9,   KC_F10,   KC_F11
 #define ___________________MMOL2_LT________________        XXXXXXX, XXXXXXX, COLEMAK
+// #define ___________________MMOL2_L2________________        KC_F5, KC_A,    KC_S,    KC_D,     KC_F6
 
-#define ___________________MMOL2_R1________________        KC_L, KC_F,      KC_UP,    KC_G,     DPI_MOD
-#define ___________________MMOL2_R2________________        KC_M, KC_LEFT,   KC_DOWN,  KC_RIGHT, DPI_RMOD
-#define ___________________MMOL2_R3________________        KC_Q, KC_H,      KC_J,     KC_K,     KC_V
+#define ___________________MMOL2_R1________________        KC_X, KC_P,      KC_I,     KC_O,     KC_TAB
+#define ___________________MMOL2_R2________________        KC_Y, KC_LEFT,   KC_DOWN,  KC_RIGHT, KC_B
+#define ___________________MMOL2_R3________________        KC_Z, KC_A,      KC_J,     KC_D,     KC_V
 #define ___________________MMOL2_RT________________        COLEMAK, KC_ENT
 
 
+
+
+//////////////////////////////////////////////////////////////////////////
 #define ___________________GAME_L1_________________        KC_TAB,        KC_B,  KC_W,  KC_R,    KC_T
 #define ___________________GAME_L2_________________        KC_ESC,        KC_A,  KC_S,  KC_D,    KC_E
 #define ___________________GAME_L3_________________        LALT_T(KC_ENT), KC_1,  KC_2,  KC_LSFT, KC_F
